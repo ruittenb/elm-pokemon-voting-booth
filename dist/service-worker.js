@@ -19,6 +19,8 @@ const filesToCache = [
     '/voting-booth.min.css',
     '/font-awesome.min.css',
     '/fonts/fontawesome-webfont.woff',
+    '/icons/bell.png',
+    '/icons/bell-bw.png',
     '/icons/cross.png',
     '/icons/find-bw.png',
     '/icons/lock-bw.png',
