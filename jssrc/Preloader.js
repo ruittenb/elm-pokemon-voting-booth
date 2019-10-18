@@ -4,7 +4,7 @@
  * VotingAppWrapper
  */
 
-module.exports = (function (jQuery) {
+module.exports = (function ($) {
 
     const batchSize = 5;
     const batchTime = 250;
@@ -34,8 +34,8 @@ module.exports = (function (jQuery) {
     Preloader.prototype.installButton = function (parentNode)
     {
         let me = this;
-        jQuery(document).ready(function () {
-            me.$button = jQuery(parentNode)
+        $(document).ready(function () {
+            me.$button = $(parentNode)
                 .append('<span id="preload-controls" class="fa" style="display:none"></span>')
                 .children()
                 .first()
@@ -129,5 +129,6 @@ module.exports = (function (jQuery) {
     };
 
     return Preloader;
-})(jQuery);
+
+})($); // $ is the cash library
 

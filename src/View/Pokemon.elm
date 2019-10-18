@@ -63,7 +63,7 @@ linkToLightbox : String -> String -> String -> Html Msg -> Html Msg
 linkToLightbox imageUrl title caption content =
     a
         [ href imageUrl
-        , attribute "data-lightbox" "pokemon"
+        , attribute "data-mediabox" "pokemon"
         , attribute "data-title" title
         , attribute "data-caption" caption
         , attribute "aria-label" "image"
