@@ -54,6 +54,7 @@ button.user-button,
 .button.letter-button,
 .button.generation-button,
 .button.maintenance-button,
+.button.notifications-button,
 .button.lock-button {
     height: 30px;
     margin-right: 4px;
@@ -67,6 +68,8 @@ button.user-button,
 .button.letter-button,
 .button.generation-button,
 .button.maintenance-button,
+.button.maintenance-button,
+.button.notifications-button,
 .button.lock-button {
     background-color: white;
     border: 1px solid black;
@@ -92,6 +95,21 @@ span.button.lock-button {
 
 button.user-button {
     width: 82px;
+}
+
+.button.notifications-button {
+    background: white url(icons/bell.png) no-repeat center center;
+}
+
+.button.notifications-button.subscribed {
+    background-color: #e6c6e6; /* purple */
+}
+
+.button.notifications-button.disabled,
+.button.notifications-button.disabled:hover {
+    border-color: #777;
+    background-color: #eee;
+    background-image: url(icons/bell-bw.png);
 }
 
 .button.maintenance-button {
@@ -130,6 +148,7 @@ button.user-button,
 .button.button-spacer,
 .button.lock-button,
 .button.maintenance-button,
+.button.notifications-button,
 .button.generation-button,
 .button.letter-button {
     width: 39px;
@@ -150,6 +169,8 @@ a.button.lock-button:hover,
 .button.generation-button:hover,
 .button.letter-button:hover,
 .button.maintenance-button:hover,
+.button.maintenance-button:hover,
+.button.notifications-button:hover,
 .poketile .button:hover {
     background-color: #f8f0f8; /* light purple */
 }
@@ -241,6 +262,21 @@ button.user-button.current,
     }
 }
 
+.button.notifications-button:after {
+    top: -25px;
+    content: 'subscribe to push notifications';
+}
+
+.button.notifications-button.subscribed:after {
+    content: 'unsubscribe from push notifications';
+}
+
+.button.notifications-button.disabled:after {
+    width: 80px;
+    right: 70px;
+    content: 'subscribing unavailable';
+}
+
 .button.lock-button:after {
     content: 'open for voting';
     width: 100px;
@@ -326,9 +362,16 @@ button.user-button.current,
     line-height: 28px;
 }
 
+#user-name.admin {
+    width: 211px;
+}
+
 @media (max-width: 455px) {
     #user-name {
         width: 211px;
+    }
+    #user-name.admin {
+        width: 168px;
     }
 }
 

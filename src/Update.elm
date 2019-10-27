@@ -235,8 +235,13 @@ update msg maybeHighlightedState =
                 in
                     ( newState, Cmd.none )
 
-            UserRatingsLoaded _ ->
+            NotificationsClicked ->
+                -- TODO
                 ( oldState, Cmd.none )
+                    |> setStatusMessage Debug "Toggle notifications"
+
+            VariantChanged pokemonNumber direction ->
+                updateChangeVariant oldState pokemonNumber direction
 
             PokedexLoaded pokedex ->
                 updateOnLoadPokedex oldState pokedex

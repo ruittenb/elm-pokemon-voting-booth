@@ -186,8 +186,8 @@ letterButtons currentRoute pokedex subPage =
         div [ id "letter-buttons" ] buttonList
 
 
-loginLogoutButton : AuthenticationModel -> User -> Html Msg
-loginLogoutButton authModel currentUser =
+loginLogoutButton : AuthenticationModel -> User -> Bool -> Html Msg
+loginLogoutButton authModel currentUser isCurrentUserAdmin =
     let
         loggedIn =
             isLoggedIn authModel
@@ -221,6 +221,7 @@ loginLogoutButton authModel currentUser =
                 [ id "user-name"
                 , classList
                     [ ( "current", loggedIn )
+                    , ( "admin", isCurrentUserAdmin )
                     ]
                 ]
                 [ text userName ]
@@ -229,31 +230,67 @@ loginLogoutButton authModel currentUser =
 
 maintenanceButton : RemoteSettings -> Bool -> Html Msg
 maintenanceButton remoteSettings isCurrentUserAdmin =
+    if not isCurrentUserAdmin then
+        text ""
+    else
+        remoteSettings
+            |> RemoteData.map
+                (\settings ->
+                    a
+                        [ classList
+                            [ ( "button", True )
+                            , ( "maintenance-button", True )
+                            , ( "maintenance-mode", settings.maintenanceMode )
+                            , ( "with-tooltip", True )
+                            ]
+                        , onClick MaintenanceModeClicked
+                        ]
+                        []
+                )
+            |> RemoteData.withDefault (text "")
+
+
+notificationsButton : AuthenticationModel -> Html Msg
+notificationsButton authModel =
     let
+        notificationsAvailable =
+            -- TODO
+            True
+
+        notificationsAttribute =
+            if notificationsAvailable then
+                [ onClick NotificationsClicked ]
+            else
+                []
+
+        isSubscribed =
+            -- TODO
+            False
+
+        loggedIn =
+            isLoggedIn authModel
+
         placeHolder =
             div [ class "button button-spacer" ] []
 
         buttonHtml =
-            remoteSettings
-                |> RemoteData.map
-                    (\settings ->
-                        a
-                            [ classList
-                                [ ( "button", True )
-                                , ( "maintenance-button", True )
-                                , ( "maintenance-mode", settings.maintenanceMode )
-                                , ( "with-tooltip", True )
-                                ]
-                            , onClick MaintenanceModeClicked
-                            ]
-                            []
-                    )
-                |> RemoteData.withDefault placeHolder
+            a
+                ([ classList
+                    [ ( "button", True )
+                    , ( "notifications-button", True )
+                    , ( "disabled", not notificationsAvailable )
+                    , ( "subscribed", isSubscribed )
+                    , ( "with-tooltip", True )
+                    ]
+                 ]
+                    ++ notificationsAttribute
+                )
+                []
     in
-        if isCurrentUserAdmin then
-            buttonHtml
-        else
+        if not loggedIn then
             placeHolder
+        else
+            buttonHtml
 
 
 lockButton : Route -> Maybe Page -> Bool -> Html Msg
@@ -519,9 +556,12 @@ applicationPane state =
             [ loginLogoutButton
                 state.authModel
                 state.currentUser
+                isCurrentUserAdmin
             , maintenanceButton
                 state.settings
                 isCurrentUserAdmin
+            , notificationsButton
+                state.authModel
             , messageBox
                 state.statusMessage
                 state.statusLevel

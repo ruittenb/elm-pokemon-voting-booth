@@ -36,6 +36,7 @@ type Msg
     | PageLockClicked Page
     | WinnerElected Page PokeWinner
     | MaintenanceModeClicked
+    | NotificationsClicked
     | SearchPokemon String
     | DebounceSearchPokemon (Control Msg)
     | PokemonVoteCast UserVote
