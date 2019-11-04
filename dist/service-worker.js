@@ -4,6 +4,7 @@
  */
 
 const version = 'v15.7.0';
+const siteUrl = 'https://voting-booth.dokube.profortool.com/';
 const cacheName = 'sprintname-voting-booth-' + version;
 const imageDir = '/pokeart/'
 const placeHolder = 'silhouette.png';
@@ -82,6 +83,33 @@ self.addEventListener('activate', function (event) {
         })
     );
     return self.clients.claim();
+});
+
+/**
+ * Listen to arriving push notifications
+ */
+self.addEventListener('push', function(event) {
+    console.log('[ServiceWorker] Push notification received');
+    const title = 'Push Codelab';
+    const options = {
+        body: event.data.text(),
+        //badge: 'images/badge.png',
+        icon: 'favicons/favicon-144x144.png'
+    };
+    event.waitUntil(
+        self.registration.showNotification(title, options)
+    );
+});
+
+/**
+ * Open the main site when the notification is clicked
+ */
+self.addEventListener('notificationclick', function(event) {
+    console.log('[ServiceWorker] Notification click received');
+    event.notification.close();
+    event.waitUntil(
+        clients.openWindow(siteUrl)
+    );
 });
 
 /**

@@ -51,31 +51,25 @@ module.exports = (function () {
     const bodyParser = require('body-parser');
     const jwt        = require('jsonwebtoken');
 
-    const AUTHORIZED_USERS = /^[^@]+@proforto\.nl$/;
-    const DATABASE_URL = 'https://sprintname-voting-booth.firebaseio.com';
+    const AUTHORIZED_USERS    = /^[^@]+@proforto\.nl$/;
     const DEBUG_EXPIRED_TOKEN = false;
-    const DEBUG = false;
-    const VALID_REFERERS = [
+    const DEBUG               = false;
+    const VALID_REFERERS      = [
         'http://localhost:4201',
         'https://voting-booth.dokube.profortool.com'
     ];
 
     // These values must stay private.
-    let privateKey, serviceAccountKey;
+    let privateKey;
 
     /**
      * Constructor.
      */
-    let FirebaseTokenServer = function (webserver)
+    let FirebaseTokenServer = function (webserver, firebaseAdmin)
     {
-        serviceAccountKey  = require(__dirname + '/keys/serviceAccountKey.json');
-        privateKey = fs.readFileSync(__dirname + '/keys/private-auth0.key');
-        this.firebaseAdmin = require('firebase-admin');
-        this.firebaseAdmin.initializeApp({
-            credential: this.firebaseAdmin.credential.cert(serviceAccountKey),
-            databaseURL: DATABASE_URL
-        });
         this.server = webserver;
+        this.firebaseAdmin = firebaseAdmin;
+        privateKey = fs.readFileSync(__dirname + '/keys/private-auth0.key');
         this.addRoutes();
     };
 

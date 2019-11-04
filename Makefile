@@ -192,7 +192,7 @@ watch: ## start the webserver. rebuild and restart if the source changes
 			npm start &                                             \
 			rm $(JS_SOURCE)/bundle.js.tmp-browserify-* 2>/dev/null; \
 			fswatch --one-event $(ELM_SOURCE) $(JS_SOURCE)          \
-				$(SERVICE_WORKER) $(CSS_FILES) tokenserver;     \
+				$(SERVICE_WORKER) $(CSS_FILES) server;          \
 			make show-busy;                                         \
 			echo 'Changes detected, rebuilding...';                 \
 			npm stop;                                               \

@@ -8,7 +8,7 @@ require('firebase/database');
  * Database
  */
 
-module.exports = (function (jQuery, firebase)
+module.exports = (function (firebase)
 {
     /** **********************************************************************
      * Static data
@@ -227,6 +227,6 @@ module.exports = (function (jQuery, firebase)
 
     return Database;
 
-})(jQuery, firebase);
+})(firebase);
 
 /* vim: set ts=4 sw=4 et list: */

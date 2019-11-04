@@ -7,9 +7,12 @@
 require('./version.js');
 
 // Javascript "bridges" to Auth0, Firebase and the Elm app
-const Authentication = require('./Authentication.js');
-const Database       = require('./Database.js');
-const VotingApp      = require('./VotingApp.js');
+const Authentication      = require('./Authentication.js');
+const Database            = require('./Database.js');
+const VotingApp           = require('./VotingApp.js');
+const NotificationHandler = require('./NotificationHandler.js');
+
+let notificationHandler;
 
 /** **********************************************************************
  * Register serviceworker if supported
@@ -20,6 +23,7 @@ if ('serviceWorker' in navigator) {
         .register('/service-worker.js')
         .then(function(registration) {
             console.log('Service Worker Registered with scope', registration.scope);
+            notificationHandler = new NotificationHandler(registration);
         })
         .catch(function (err) {
             console.log('ServiceWorker registration failed:', err);
