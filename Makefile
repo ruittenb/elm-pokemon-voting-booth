@@ -2,6 +2,7 @@
 export PATH:=$(PATH):$(shell npm bin)
 SHELL:=bash
 
+SCSS_FILES=$(wildcard scss/*.scss)
 CSS_FILES=$(wildcard dist/*[!n].css) # *.css, but not *.min.css
 MIN_CSS_FILES=$(CSS_FILES:.css=.min.css)
 
@@ -91,8 +92,12 @@ build-js-minify-prod: ## minify javascript bundle (unless on development)
 	@# descend into the directory in order to prevent corrupting URLs in CSS
 	cd $(<D); cleancss $(<F) > $(@F)
 
+.PHONY: build-css
+build-css: $(SCSS_FILES) ## compile scss files to css files
+	for i in $(SCSS_FILES); do sass $$i > dist/`basename $${i%.scss}.css`; done
+
 .PHONY: build-css-minify
-build-css-minify: $(MIN_CSS_FILES) ## minify all css files
+build-css-minify: build-css $(MIN_CSS_FILES) ## minify all css files
 
 .PHONY: build
 build: version build-elm build-bundle build-js-minify-prod build-css-minify ## all of the build steps above
@@ -192,7 +197,8 @@ watch: ## start the webserver. rebuild and restart if the source changes
 			npm start &                                             \
 			rm $(JS_SOURCE)/bundle.js.tmp-browserify-* 2>/dev/null; \
 			fswatch --one-event $(ELM_SOURCE) $(JS_SOURCE)          \
-				$(SERVICE_WORKER) $(CSS_FILES) tokenserver;     \
+				$(SERVICE_WORKER) tokenserver                   \
+				$(SCSS_FILES) $(CSS_FILES);                     \
 			make show-busy;                                         \
 			echo 'Changes detected, rebuilding...';                 \
 			npm stop;                                               \

@@ -1,0 +1,794 @@
+
+$theme: 'purple';
+
+$purple-light  : #f8f0f8;
+$purple-medium : #f0daf0;
+$purple        : #e6c6e6;
+$purple-intense: #d02ad0;
+$purple-dark   : #b768b7;
+
+$olive-light   : #ebf0e0;
+$olive-medium  : #dfe9ca;
+$olive         : #c2d699;
+$olive-intense : #9bd623;
+$olive-dark    : #7e9550;
+
+$yellow-tooltip: #fef4c5;
+$yellow-light  : #fef0b3;
+$yellow-warm   : #edb867;
+$yellow-dark   : #bbbb00;
+$yellow-brown  : #a97722;
+
+$blue-light    : #bee4f7;
+$blue-dark     : #345485;
+
+$green-light   : #dff3c0;
+$green         : #00aa44;
+$green-moss    : #617f1d;
+
+$red-light     : #ffbabc;
+$red           : #ee0000;
+$red-dark      : #a90f1b;
+
+@if $theme == 'olive' {
+    $theme-light   : $olive-light    !global;
+    $theme-medium  : $olive-medium   !global;
+    $theme-main    : $olive          !global;
+    $theme-intense : $olive-intense  !global;
+    $theme-dark    : $olive-dark     !global;
+} @else {
+    $theme-light   : $purple-light   !global;
+    $theme-medium  : $purple-medium  !global;
+    $theme-main    : $purple         !global;
+    $theme-intense : $purple-intense !global;
+    $theme-dark    : $purple-dark    !global;
+}
+
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body#voting-app-body {
+    /* allow for 4px more on the left than on the right
+     * because buttons have 4px space on the right */
+    padding: 8px 4px 8px 8px;
+    background-color: #f0f0f0;
+    font-family: Helvetica, Arial, Sans;
+    font-size: 14px;
+}
+
+@media (max-width: 455px) {
+    body#voting-app-body {
+        padding: 8px 2px 8px 10px;
+    }
+}
+
+h1#page-title {
+    font-style: italic;
+    font-size: 20px;
+    color: #333;
+    margin: 4px 4px 12px 0;
+}
+
+h2.date-heading {
+    clear: both;
+    font-size: 16px;
+    width: 100%;
+}
+
+button,
+.button {
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    line-height: 28px;
+    outline: none;
+    cursor: default;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Chrome and Opera */
+}
+
+button.user-button,
+.button.show-voters,
+.button.show-rankings,
+.button.button-spacer,
+.button.letter-button,
+.button.generation-button,
+.button.maintenance-button,
+.button.lock-button {
+    height: 30px;
+    margin-right: 4px;
+    margin-bottom: 6px;
+    border-radius: 0;
+}
+
+button.user-button,
+.button.show-voters,
+.button.show-rankings,
+.button.letter-button,
+.button.generation-button,
+.button.maintenance-button,
+.button.lock-button {
+    background-color: white;
+    border: 1px solid black;
+    color: black;
+}
+
+span.button.show-voters,
+span.button.show-rankings,
+span.button.lock-button {
+    /* disabled */
+    color: #777;
+    border-color: #777;
+    background-color: #eee;
+}
+
+.button.show-voters {
+    width: 125px;
+}
+
+.button.show-rankings {
+    width: 168px;
+}
+
+button.user-button {
+    width: 82px;
+}
+
+.button.maintenance-button {
+    background: white url(icons/maintenance.png) no-repeat center center;
+}
+
+.button.maintenance-button.maintenance-mode {
+    background-color: $theme-main;
+}
+
+.button.lock-button {
+    background-image: url(icons/lock-open-bw.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.button.lock-button.locked {
+    background-image: url(icons/lock-bw.png);
+}
+
+.button.lock-button.search,
+.button.lock-button.locked.search {
+    background-image: url(icons/find-bw.png);
+}
+
+button.user-button,
+.button.show-voters,
+.button.show-rankings,
+.button.lock-button {
+    display: block;
+    float: left;
+    font-size: 14px;
+    font-family: inherit;
+}
+
+.button.button-spacer,
+.button.lock-button,
+.button.maintenance-button,
+.button.generation-button,
+.button.letter-button {
+    width: 39px;
+    display: block;
+    float: left;
+}
+
+@media (max-width: 455px) {
+    .button.button-spacer {
+        display: none;
+    }
+}
+
+button.user-button:hover,
+a.button.show-voters:hover,
+a.button.show-rankings:hover,
+a.button.lock-button:hover,
+.button.generation-button:hover,
+.button.letter-button:hover,
+.button.maintenance-button:hover,
+.poketile .button:hover {
+    background-color: $theme-light;
+}
+
+button.user-button:active,
+a.button.show-voters:active,
+a.button.show-rankings:active,
+a.button.lock-button:active,
+.poketile .button:active {
+    background-color: $theme-medium;
+}
+
+#user-name.current,
+button.user-button.current,
+.button.letter-button.current,
+.button.generation-button.current,
+.button.generation-button.current.transparent {
+    background-color: $theme-main;
+    opacity: 1;
+}
+
+.button.letter-button.disabled {
+    color: #777;
+    border-color: #777;
+    background-color: #eee;
+}
+
+.button.letter-button.disabled.current {
+    background-color: $theme-medium;
+}
+
+.button.generation-button.transparent {
+    opacity: 0.01;
+}
+
+/**
+ * Hide the generation 0 button if it would be on one line (looking empty).
+ * The scrollbar width messes this up, because its width is browser-dependent
+ * and its presence is dependent on the length of the page.
+ * Therefore, allow for a big margin of error.
+ */
+@media (min-width: 360px) and (max-width: 423px) {
+    .button.generation-button.transparent {
+        display: none;
+    }
+}
+
+.button.generation-button.error {
+    background: $theme-main url(images/loading-error.png) 0 0 repeat;
+}
+
+/**
+ * CSS tooltips on buttons
+ */
+.button.with-tooltip:after {
+    font-size: 12px;
+    top: -15px;
+    right: 100px;
+    width: 110px;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    position: relative;
+    z-index: 2;
+    padding: 2px;
+    text-align: center;
+    line-height: 17px;
+    background-color: $yellow-tooltip;
+    border: 1px solid $yellow-dark;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    transition: opacity 0.5s ease-out, visibility 0.5s linear;
+}
+
+.button.with-tooltip:hover:after {
+    visibility: visible;
+    opacity: 1;
+}
+
+.button.maintenance-button:after {
+    content: 'maintenance mode';
+}
+
+@media (min-width: 361px) {
+    .button.maintenance-button:after {
+        left: 24px;
+    }
+}
+
+.button.lock-button:after {
+    content: 'open for voting';
+    width: 100px;
+}
+
+/*
+@media (max-width: 360px) {
+    .button.lock-button:after {
+        right: 90px;
+    }
+}
+*/
+
+@media (min-width: 361px) {
+    .button.lock-button:after {
+        left: 28px;
+        top: 8px;
+    }
+}
+
+.button.lock-button.locked:after {
+    content: 'voting has closed';
+}
+
+.button.lock-button.for-admin:after {
+    content: 'open for voting (click to close)';
+}
+
+.button.lock-button.for-admin.locked:after {
+    content: 'voting has closed (click to open)';
+}
+
+.button.lock-button.with-tooltip.locked.search:after { /* increase css precedence */
+    content: 'search mode';
+}
+
+/**
+ * change the order of items on mobile:
+ * keep the generation buttons close to the letter buttons
+ * and move the search box above both.
+ */
+@media (max-width: 455px) {
+    #main-buttons {
+        display: flex;
+    }
+    #function-buttons {
+        display: flex;
+        flex-direction: column;
+    }
+    #search-box-container { order: 20; }
+    #generation-buttons   { order: 30; }
+    #letter-buttons       { order: 40; }
+    #calculation-buttons  { order: 50; }
+}
+
+#user-buttons,
+#generation-buttons {
+    white-space: nowrap;
+    display: block;
+    clear: left;
+}
+
+#letter-buttons {
+    line-height: 0.5;
+}
+
+#letter-buttons,
+#calculation-buttons {
+    clear: left;
+}
+
+#user-name {
+    display: inline-block;
+    height: 30px;
+    width: 254px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    float: left;
+    border: 1px solid black;
+    background-color: #eee;
+    color: black;
+    text-align: center;
+    line-height: 28px;
+}
+
+@media (max-width: 455px) {
+    #user-name {
+        width: 211px;
+    }
+}
+
+#message-box {
+    border: 1px solid black;
+    margin-right: 4px;
+    padding: 0 10px;
+    height: 30px;
+    overflow: hidden;
+    background-color: #eee;
+    color: black;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 30px;
+
+    &.notice {
+        font-style: italic;
+    }
+
+    &.debug {
+        visibility: visible;
+        border-color: $blue-dark;
+        color: $blue-dark;
+        background-color: $blue-light;
+    }
+
+    &.success {
+        visibility: visible;
+        border-color: $green-moss;
+        color: $green-moss;
+        background-color: $green-light;
+    }
+
+    &.warning {
+        visibility: visible;
+        border-color: $yellow-brown;
+        color: $yellow-brown;
+        background-color: $yellow-light;
+    }
+
+    &.error {
+        visibility: visible;
+        border-color: $red-dark;
+        color: $red-dark;
+        background-color: $red-light;
+    }
+}
+
+@media (max-width: 455px) {
+    #message-box {
+        visibility: hidden;
+        clear: left;
+        width: 80%;
+        height: auto;
+        min-height: 30px;
+        padding: 2px 10px 0 10px;
+        margin-bottom: 6px;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 70;
+        box-shadow: 5px 10px 15px 0px #333;
+        white-space: normal;
+        text-align: center;
+    }
+}
+
+#search-box-container {
+    overflow: hidden;
+    margin-bottom: 6px;
+    margin-right: 4px;
+}
+
+#search-box {
+    -webkit-appearance: none;
+    display: block;
+    height: 30px;
+    width: 100%;
+    padding: 0 6px;
+    border: 1px solid black;
+    font-size: 14px;
+
+    &:hover,
+    &:focus {
+        background-color: $theme-light;
+    }
+    &:focus {
+        outline: none;
+    }
+    &.current {
+        background-color: $theme-main;
+    }
+}
+
+@media (max-width: 455px) {
+    #search-box {
+        width: calc(100% - 4px);
+    }
+}
+
+/* apparently, these cannot be combined */
+::-webkit-input-placeholder {
+   font-style: italic;
+   color: #aaa;
+}
+::-moz-placeholder {
+   font-style: italic;
+   color: #aaa;
+}
+:-moz-placeholder {
+   font-style: italic;
+   color: #aaa;
+}
+:-ms-input-placeholder {
+   font-style: italic;
+   color: #aaa;
+}
+
+.pokecanvas {
+    clear: left;
+    display: flex;
+    flex-wrap: wrap;
+
+    .empty-canvas {
+        width: 100%;
+        padding-top: 100px;
+        text-align: center;
+    }
+}
+
+.poketile {
+    height: 220px;
+    width: 220px;
+    background-color: white;
+    border: 1px solid black;
+    text-align: center;
+    margin: 10px 10px 0 0;
+
+    &.winner {
+        background-image: linear-gradient(135deg, $theme-main 17%, white 17%, white 83%, $theme-main 83%); /* diagonally equally segmented theme-white-theme */
+    }
+    &.winner::after {
+        background: url(images/ribbon.png) no-repeat;
+        content: '';
+        width: 32px;
+        height: 50px;
+        position: relative;
+        display: block;
+        top: -200px;
+        left: calc(50% - 16px);
+    }
+
+    &.left-arrow {
+        background: url(images/lb-prev.png) -10px center no-repeat;
+    }
+    &.right-arrow {
+        background: url(images/lb-next.png) 10px center no-repeat;
+    }
+
+    p {
+        display: flex;
+        justify-content: space-between;
+        margin: 8px 14px;
+    }
+
+    .left-arrow,
+    .right-arrow {
+        width: 50px;
+        height: 120px;
+    }
+
+    .button {
+        display: inline-block;
+        width: 25px;
+        border: 1px solid #444;
+        padding: 1px;
+        background-color: white;
+        color: #444;
+        line-height: normal;
+        text-decoration: none;
+        text-align: center;
+        cursor: default;
+    }
+}
+
+/* make tiles full-width on mobile */
+@media (max-width: 455px) {
+    .poketile {
+        width: 100%;
+        margin-right: 8px;
+    }
+}
+
+.pokemon-image-strip-box {
+    display: flex;
+    justify-content: space-between;
+    height: 120px;
+}
+
+.pokemon-image-strip {
+    white-space: nowrap;
+}
+
+.pokemon-image-box {
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+}
+
+.pokemon-image {
+    max-width: 120px;
+    max-height: 120px;
+}
+
+.rating-nodes {
+    margin-top: 5px;
+    height: 28px;
+    white-space: nowrap;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    & > span {
+        line-height: 26px;
+        height: 26px;
+    }
+
+    & > span.highlight {
+        text-shadow: 0 0 12px $theme-intense;
+        /*
+        border-top: 2px solid black;
+        border-bottom: 2px solid black;
+        border-radius: 3px;
+        */
+    }
+}
+
+.rating-nodes span.star,
+.voting-node span.star {
+    font: normal normal normal 20px/1 FontAwesome;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    text-decoration: none;
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
+.voting-node span.star {
+    color: #ddd; /* light grey */
+}
+
+.voting-node span.star.selected,
+.no-touch .voting-node:hover span.star,
+.no-touch .voting-node:hover span.star.selected {
+    color: $yellow-warm;
+}
+
+.no-touch .voting-node:hover span.star::before {
+    content: "\f005"; /* filled star */
+}
+
+.no-touch .voting-node span.star:hover ~ span.star {
+    color: #ddd; /* light grey */
+}
+
+.no-touch .voting-node span.star:hover ~ span.star::before {
+    content: "\f006"; /* outline star */
+}
+
+.lb-dataContainer .lb-data .lb-details {
+    width: 90%;
+}
+
+.lb-dataContainer .lb-data .lb-number {
+    padding-top: 4px;
+}
+
+.lb-title {
+    bottom: 14px;
+    position: relative;
+    color: #eee;
+    font-weight: bold;
+    font-size: 16px;
+    /* font-variant: small-caps; */
+}
+
+.loading-error {
+    height: 16px;
+    width: 16px;
+    margin: 32px auto 0 auto;
+    background: transparent url(icons/cross.png) top left no-repeat;
+}
+
+.loading-busy {
+    height: 10px;
+    width: 32px;
+    margin: 36px auto 0 auto;
+    background: transparent url(images/loading-busy.gif) top left no-repeat;
+}
+
+.unknown-user {
+    height: 16px;
+    width: 16px;
+    margin: 0 auto 0 auto;
+}
+
+#version {
+    position: fixed;
+    right: 4px;
+    bottom: 4px;
+    font-size: 7pt;
+    color: #ccc;
+}
+
+#preload-controls {
+    padding: 1px 2px;
+    background-color: #f8f8f8;
+    margin: 0 2px;
+}
+
+/**
+ * calculated rankings and votes
+ */
+
+.mask {
+    z-index: 30;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    opacity: 0.5;
+}
+
+.voters-table-wrapper,
+.rankings-table-wrapper {
+    margin: 0 auto;
+    border: 1px solid black;
+    background-color: white;
+    /* box-shadow: 5px 10px 8px #888; */
+    position: fixed;
+    z-index: 60;
+    width: 250px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.voters-table,
+.rankings-table {
+    border-width: 1px 0;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-color: black;
+    background-color: white;
+    border-collapse: collapse;
+    margin: 20px auto;
+    width: 80%;
+
+    tr:nth-child(even) {
+        background-color: #eee;
+    }
+    td {
+        padding: 1px 10px;
+        white-space: nowrap;
+    }
+}
+
+.rankings-table {
+    .ribbon {
+        height: 18px;
+        margin-left: 5px;
+        vertical-align: middle;
+    }
+
+    .elect-button {
+        background-color: white;
+        border: 1px solid #777;
+        outline: none;
+        line-height: 16px;
+        width: 40px;
+    }
+    .elect-button.winner {
+        background-color: $theme-main;
+    }
+    .elect-button:hover {
+        background-color: $theme-light;
+    }
+    .elect-button.winner:hover {
+        background-color: $theme-medium;
+    }
+
+    tr.winner-rating {
+        color: $theme-dark;
+        font-weight: bold;
+    }
+}
+
+
+.voters-table {
+    tr.complete {
+        color: $green;
+    }
+    tr.incomplete {
+        color: $yellow-dark;
+    }
+    tr.absent {
+        color: $red;
+    }
+}
+
+/* vim: set sw=4 ts=4 et list: */
