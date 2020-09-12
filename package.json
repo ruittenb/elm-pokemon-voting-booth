@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@firebase/app": "^0.6.10",
-    "auth0-js": "^9.11.3",
+    "auth0-js": "^9.13.2",
     "auth0-lock": "^11.26.3",
     "browserify": "^16.5.0",
     "cached-path-relative": "^1.0.2",
